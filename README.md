@@ -1,6 +1,6 @@
 # OpenMT (`y.open.mt`)
 
-OpenMT es una reconstrucción descompilada y libre de telemetría de MT Manager (v2.26.10), organizada con el código fuente en Java, pseudocódigo C/C++ de todas sus librerías nativas, y un proyecto reensamblable para generar el APK sin rastreadores.
+OpenMT es una reconstrucción descompilada y libre de telemetría de MT Manager (v2.26.10), organizada con el código fuente en Java, pseudocódigo C/C++ de todas sus librerías nativas, y un proyecto reensamblable para generar el APK sin rastreadores, compatible con Android 11 hasta Android 16.
 
 ---
 
@@ -17,13 +17,16 @@ openMT/
 │       ├── libhook/             # Motor de hooking ART
 │       └── libterm/             # Terminal interna
 ├── apk_project/                 # Proyecto Smali y recursos reensamblable con Apktool
-│   ├── AndroidManifest.xml      # Paquete: y.open.mt (sin metadatos de telemetría)
+│   ├── AndroidManifest.xml      # Manifiesto en texto fuente (paquete: y.open.mt)
+│   ├── AndroidManifest_binary.xml # Manifiesto AXML binario precompilado válido para Android 16
 │   ├── smali/ .. smali_classes5/# Bytecode Smali con stubs No-Op aplicados a los trackers
 │   ├── lib/                     # Librerías nativas depuradas (libumeng-spy.so eliminado)
 │   └── res/                     # Recursos originales protegidos
 ├── dist/                        # Directorio para el APK final compilado
-├── .github/workflows/           # Integración continua con GitHub Actions
-└── patch_trackers.py            # Script automatizado de neutralización de trackers
+├── .github/workflows/           # Integración continua con GitHub Actions (firma v1+v2+v3)
+├── build_apk.py                 # Pipeline automatizado de compilación, inyección AXML y firma
+├── patch_binary_manifest.py     # Utilidad de modificación directa del StringPool AXML binario
+└── patch_trackers.py            # Script automatizado de neutralización de trackers Smali
 ```
 
 ---
@@ -31,7 +34,7 @@ openMT/
 ## 🛡️ Modificaciones y Eliminación de Trackers
 
 1. **Identificador del Paquete:**
-   - Cambiado a `y.open.mt` en `AndroidManifest.xml` y permisos asociados.
+   - Cambiado a `y.open.mt` en `AndroidManifest.xml` binario y permisos asociados.
 
 2. **Umeng Telemetry & Native Spy:**
    - **`libumeng-spy.so`** eliminado de todas las arquitecturas (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`).
@@ -40,20 +43,26 @@ openMT/
    - **`com.umeng.analytics.MobclickAgent`:** Métodos de tracking de eventos y sesiones convertidos en No-Op.
    - **`AndroidManifest.xml`:** Eliminada la etiqueta `<meta-data android:name="UMENG_CHANNEL" .../>`.
 
+3. **Compatibilidad con Android 11 a Android 16:**
+   - Estructura AXML binaria válida de 32 bits generada directamente para el PackageManager moderno.
+   - Alineación de 4 bytes (`zipalign`) en todos los archivos de almacenamiento.
+   - Firma criptográfica completa soportando los esquemas **v1 (JAR)**, **v2 (APK Signature)** y **v3 (Android 11+)**.
+
 ---
 
 ## 🚀 Compilación Local
 
-Para compilar el APK localmente se requiere **Java 17 o superior** y **Apktool**:
+Para compilar y firmar el APK compatible con Android 16:
 
 ```bash
-# Compilar el proyecto con Apktool
-apktool b apk_project -o dist/openMT-y.open.mt.apk
-
-# Firmar el APK con jarsigner
-keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
-jarsigner -keystore debug.keystore -storepass android dist/openMT-y.open.mt.apk androiddebugkey
+python build_apk.py
 ```
+
+El script se encargará automáticamente de:
+1. Reensamblar el proyecto Smali con Apktool.
+2. Inyectar el `AndroidManifest.xml` binario con paquete `y.open.mt`.
+3. Alinear con `zipalign` y firmar con `uber-apk-signer` (esquemas v1, v2 y v3).
+4. Generar el APK verificado en `dist/openMT-y.open.mt.apk`.
 
 ---
 
