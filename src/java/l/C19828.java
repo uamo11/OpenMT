@@ -1,0 +1,24 @@
+package l;
+
+/* compiled from: N9ZJ */
+/* renamed from: l.᩶֡᩻, reason: contains not printable characters */
+/* loaded from: classes4.dex */
+public final class C19828 {
+
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public volatile boolean f64059;
+
+    /* renamed from: ۧ, reason: not valid java name and contains not printable characters */
+    public volatile boolean f64060;
+
+    /* renamed from: ܽ, reason: not valid java name and contains not printable characters */
+    public final C12066 f64061;
+
+    /* renamed from: ᩳ, reason: not valid java name and contains not printable characters */
+    public volatile boolean f64062;
+
+    public C19828(C12066 c12066) {
+        EnumC15592 enumC15592 = EnumC15592.UNKNOWN;
+        this.f64061 = c12066;
+    }
+}

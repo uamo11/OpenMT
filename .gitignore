@@ -1,0 +1,5 @@
+# Build caches & outputs
+apk_project/build/
+*.tmp
+*.log
+debug.keystore

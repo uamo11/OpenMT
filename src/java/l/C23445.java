@@ -1,0 +1,15 @@
+package l;
+
+/* compiled from: X6VB */
+/* renamed from: l.᩻ۘۜ, reason: contains not printable characters */
+/* loaded from: classes.dex */
+public final class C23445 extends Exception {
+
+    /* renamed from: ᩸, reason: not valid java name and contains not printable characters */
+    public final EnumC20624 f75261;
+
+    public C23445(EnumC20624 enumC20624) {
+        super(enumC20624.name());
+        this.f75261 = enumC20624;
+    }
+}

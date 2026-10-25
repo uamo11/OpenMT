@@ -1,0 +1,12 @@
+package l;
+
+/* compiled from: SA18 */
+/* renamed from: l.֡֨᩵, reason: contains not printable characters */
+/* loaded from: classes3.dex */
+public final class C0089 extends C3037 {
+    public static final long serialVersionUID = -5576981906065713710L;
+
+    public C0089() {
+        super("Operation is not supported with the negotiated capabilities");
+    }
+}

@@ -1,0 +1,24 @@
+package l;
+
+/* compiled from: 3539 */
+/* renamed from: l.᩸᩺֡, reason: contains not printable characters */
+/* loaded from: classes2.dex */
+public final class C21883 extends AbstractC9617 implements InterfaceC22240 {
+    @Override // l.InterfaceC22677
+    /* renamed from: ֨ */
+    public final /* synthetic */ String mo1789() {
+        throw null;
+    }
+
+    @Override // l.InterfaceC1779
+    /* renamed from: ֫ */
+    public final int mo1790() {
+        return this.f29163.m31418().m11942(this.f29164 + 1);
+    }
+
+    @Override // l.InterfaceC7155
+    /* renamed from: ۖ */
+    public final int mo2818() {
+        return this.f29163.m31418().mo11943(this.f29164 + 2);
+    }
+}

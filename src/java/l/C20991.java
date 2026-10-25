@@ -1,0 +1,18 @@
+package l;
+
+import android.view.View;
+
+/* compiled from: 7B5N */
+/* renamed from: l.᩷ܽ֫, reason: contains not printable characters */
+/* loaded from: classes5.dex */
+public final class C20991 extends AbstractC5468 {
+    @Override // l.AbstractC15344
+    public final float getValue(Object obj) {
+        return ((View) obj).getScaleX();
+    }
+
+    @Override // l.AbstractC15344
+    public final void setValue(Object obj, float f) {
+        ((View) obj).setScaleX(f);
+    }
+}

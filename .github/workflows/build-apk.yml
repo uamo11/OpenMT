@@ -1,0 +1,47 @@
+name: Build OpenMT APK
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Install Apktool
+        run: |
+          mkdir -p $HOME/.local/bin
+          curl -fL -o $HOME/.local/bin/apktool.jar https://github.com/iBotPeaches/Apktool/releases/download/v2.10.0/apktool_2.10.0.jar
+          echo '#!/bin/bash' > $HOME/.local/bin/apktool
+          echo 'java -jar "$HOME/.local/bin/apktool.jar" "$@"' >> $HOME/.local/bin/apktool
+          chmod +x $HOME/.local/bin/apktool
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Build APK with Apktool
+        run: |
+          mkdir -p dist
+          apktool b apk_project -o dist/openMT-y.open.mt.apk
+
+      - name: Sign APK with Debug Keystore
+        run: |
+          keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Android Debug,O=Android,C=US"
+          jarsigner -keystore debug.keystore -storepass android dist/openMT-y.open.mt.apk androiddebugkey
+
+      - name: Upload Built APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openMT-y.open.mt-apk
+          path: dist/openMT-y.open.mt.apk

@@ -1,0 +1,112 @@
+package com.rosan.dhizuku.api;
+
+import android.content.ComponentName;
+import android.content.ServiceConnection;
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
+import com.rosan.dhizuku.aidl.IDhizuku;
+import com.rosan.dhizuku.aidl.IDhizukuUserServiceConnection;
+import com.rosan.dhizuku.api.DhizukuServiceConnections;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+/* loaded from: classes.dex */
+public class DhizukuServiceConnections {
+    public static final IDhizukuUserServiceConnection iDhizukuUserServiceConnection = new AnonymousClass1();
+    public static final Map map = new HashMap();
+    public static final Map services = new HashMap();
+
+    /* renamed from: com.rosan.dhizuku.api.DhizukuServiceConnections$1, reason: invalid class name */
+    public class AnonymousClass1 extends IDhizukuUserServiceConnection.Stub {
+        @Override // com.rosan.dhizuku.aidl.IDhizukuUserServiceConnection
+        public void connected(final Bundle bundle, IBinder iBinder) {
+            onServiceConnected(bundle, iBinder);
+            try {
+                iBinder.linkToDeath(new IBinder.DeathRecipient() { // from class: com.rosan.dhizuku.api.DhizukuServiceConnections$1$$ExternalSyntheticLambda0
+                    @Override // android.os.IBinder.DeathRecipient
+                    public final void binderDied() {
+                        DhizukuServiceConnections.AnonymousClass1.this.lambda$connected$0(bundle);
+                    }
+                }, 0);
+            } catch (RemoteException unused) {
+            }
+        }
+
+        public void onServiceConnected(Bundle bundle, IBinder iBinder) {
+            ComponentName componentName = new DhizukuUserServiceArgs(bundle).getComponentName();
+            String flattenToString = componentName.flattenToString();
+            DhizukuServiceConnections.services.put(flattenToString, iBinder);
+            DhizukuServiceConnection dhizukuServiceConnection = (DhizukuServiceConnection) DhizukuServiceConnections.map.get(flattenToString);
+            if (dhizukuServiceConnection == null) {
+                return;
+            }
+            dhizukuServiceConnection.onServiceConnected(componentName, iBinder);
+        }
+
+        @Override // com.rosan.dhizuku.aidl.IDhizukuUserServiceConnection
+        /* renamed from: died, reason: merged with bridge method [inline-methods] */
+        public void lambda$connected$0(Bundle bundle) {
+            ComponentName componentName = new DhizukuUserServiceArgs(bundle).getComponentName();
+            String flattenToString = componentName.flattenToString();
+            DhizukuServiceConnections.services.remove(flattenToString);
+            DhizukuServiceConnection dhizukuServiceConnection = (DhizukuServiceConnection) DhizukuServiceConnections.map.get(flattenToString);
+            if (dhizukuServiceConnection == null) {
+                return;
+            }
+            dhizukuServiceConnection.onServiceDisconnected(componentName);
+        }
+    }
+
+    public static void start(IDhizuku iDhizuku, DhizukuUserServiceArgs dhizukuUserServiceArgs) {
+        if (((IBinder) services.get(dhizukuUserServiceArgs.getComponentName().flattenToString())) == null) {
+            iDhizuku.bindUserService(iDhizukuUserServiceConnection, dhizukuUserServiceArgs.build());
+        }
+    }
+
+    public static void stop(IDhizuku iDhizuku, DhizukuUserServiceArgs dhizukuUserServiceArgs) {
+        iDhizuku.unbindUserService(dhizukuUserServiceArgs.build());
+    }
+
+    public static void bind(IDhizuku iDhizuku, DhizukuUserServiceArgs dhizukuUserServiceArgs, ServiceConnection serviceConnection) {
+        ComponentName componentName = dhizukuUserServiceArgs.getComponentName();
+        String flattenToString = componentName.flattenToString();
+        Map map2 = map;
+        DhizukuServiceConnection dhizukuServiceConnection = (DhizukuServiceConnection) map2.get(flattenToString);
+        if (dhizukuServiceConnection == null) {
+            dhizukuServiceConnection = new DhizukuServiceConnection();
+            map2.put(flattenToString, dhizukuServiceConnection);
+        }
+        dhizukuServiceConnection.add(serviceConnection);
+        IBinder iBinder = (IBinder) services.get(flattenToString);
+        if (iBinder == null) {
+            iDhizuku.bindUserService(iDhizukuUserServiceConnection, dhizukuUserServiceArgs.build());
+        } else {
+            serviceConnection.onServiceConnected(componentName, iBinder);
+        }
+    }
+
+    public static void unbind(IDhizuku iDhizuku, ServiceConnection serviceConnection) {
+        ArrayList arrayList = new ArrayList();
+        for (Map.Entry entry : map.entrySet()) {
+            String str = (String) entry.getKey();
+            DhizukuServiceConnection dhizukuServiceConnection = (DhizukuServiceConnection) entry.getValue();
+            if (dhizukuServiceConnection == null) {
+                arrayList.add(str);
+            } else {
+                dhizukuServiceConnection.remove(serviceConnection);
+                if (dhizukuServiceConnection.isEmpty()) {
+                    arrayList.add(str);
+                }
+            }
+        }
+        Iterator it = arrayList.iterator();
+        while (it.hasNext()) {
+            String str2 = (String) it.next();
+            map.remove(str2);
+            stop(iDhizuku, new DhizukuUserServiceArgs(ComponentName.unflattenFromString(str2)));
+        }
+    }
+}

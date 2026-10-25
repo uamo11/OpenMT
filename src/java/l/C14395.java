@@ -1,0 +1,43 @@
+package l;
+
+/* compiled from: XBIX */
+/* renamed from: l.ܳ۠ۚ, reason: contains not printable characters */
+/* loaded from: classes4.dex */
+public enum C14395 extends EnumC19541 {
+    public /* synthetic */ C14395() {
+        this("ScriptDataDoubleEscapedDashDash", 30);
+    }
+
+    public C14395(String str, int i) {
+        super(str, i, 0);
+    }
+
+    @Override // l.EnumC19541
+    /* renamed from: ֫ */
+    public void mo1032(C19129 c19129, C17842 c17842) {
+        char m41800 = c17842.m41800();
+        if (m41800 == 0) {
+            c19129.m44174(this);
+            c19129.m44162((char) 65533);
+            c19129.m44177(EnumC19541.f63174);
+            return;
+        }
+        if (m41800 == '-') {
+            c19129.m44162(m41800);
+            return;
+        }
+        if (m41800 == '<') {
+            c19129.m44162(m41800);
+            c19129.m44177(EnumC19541.f63193);
+        } else if (m41800 == '>') {
+            c19129.m44162(m41800);
+            c19129.m44177(EnumC19541.f63125);
+        } else if (m41800 == 65535) {
+            c19129.m44171(this);
+            c19129.m44177(EnumC19541.f63120);
+        } else {
+            c19129.m44162(m41800);
+            c19129.m44177(EnumC19541.f63174);
+        }
+    }
+}

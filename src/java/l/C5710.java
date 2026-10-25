@@ -1,0 +1,18 @@
+package l;
+
+/* compiled from: Z6QT */
+/* renamed from: l.ۛ֡ܽ, reason: contains not printable characters */
+/* loaded from: classes3.dex */
+public final class C5710 extends C5855 {
+
+    /* renamed from: ۧ, reason: not valid java name and contains not printable characters */
+    public int f17592;
+
+    /* renamed from: ܽ, reason: not valid java name and contains not printable characters */
+    public boolean f17593;
+
+    public C5710(int i, boolean z) {
+        this.f17592 = i;
+        this.f17593 = z;
+    }
+}

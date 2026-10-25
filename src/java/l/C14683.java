@@ -1,0 +1,24 @@
+package l;
+
+/* compiled from: H9F9 */
+/* renamed from: l.ܳᩳۘ, reason: contains not printable characters */
+/* loaded from: classes4.dex */
+public final class C14683 implements InterfaceC13851 {
+
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public final /* synthetic */ long f44854;
+
+    public C14683(long j) {
+        this.f44854 = j;
+    }
+
+    @Override // l.InterfaceC13851
+    public final Long apply(Object obj) {
+        long m43931 = ((C19064) obj).m43931();
+        long j = this.f44854;
+        if (m43931 == j) {
+            return Long.valueOf(j);
+        }
+        throw new C10951(C15942.m37718(C12803.m31106("Possible remote file corruption detected, server wrote less bytes (", ") in async mode than we sent (", m43931), j, ")."));
+    }
+}

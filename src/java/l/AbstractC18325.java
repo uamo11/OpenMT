@@ -1,0 +1,18 @@
+package l;
+
+/* compiled from: A587 */
+/* renamed from: l.ᩳ᩸ܺ, reason: contains not printable characters */
+/* loaded from: classes4.dex */
+public abstract class AbstractC18325 {
+
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public static final AbstractC18325 f56976 = new C16913();
+
+    /* renamed from: ֫ */
+    public abstract long mo39766();
+
+    /* renamed from: ۧ, reason: not valid java name and contains not printable characters */
+    public static AbstractC18325 m42705() {
+        return f56976;
+    }
+}

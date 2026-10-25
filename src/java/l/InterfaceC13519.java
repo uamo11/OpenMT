@@ -1,0 +1,7 @@
+package l;
+
+/* compiled from: K22K */
+/* renamed from: l.ܰۖ, reason: contains not printable characters */
+/* loaded from: classes3.dex */
+public interface InterfaceC13519 {
+}

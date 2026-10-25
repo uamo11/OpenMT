@@ -1,0 +1,31 @@
+package l;
+
+/* compiled from: XBIX */
+/* renamed from: l.֨֨ۚ, reason: contains not printable characters */
+/* loaded from: classes2.dex */
+public enum C0783 extends EnumC19541 {
+    public /* synthetic */ C0783() {
+        this("RCDATAEndTagOpen", 11);
+    }
+
+    public C0783(String str, int i) {
+        super(str, i, 0);
+    }
+
+    @Override // l.EnumC19541
+    /* renamed from: ֫ */
+    public void mo1032(C19129 c19129, C17842 c17842) {
+        if (c17842.m41808()) {
+            c19129.m44161(false);
+            AbstractC8545 abstractC8545 = c19129.f60287;
+            char m41799 = c17842.m41799();
+            abstractC8545.getClass();
+            abstractC8545.m22256(String.valueOf(m41799));
+            c19129.f60299.append(c17842.m41799());
+            c19129.m44167(EnumC19541.f63159);
+            return;
+        }
+        c19129.m44163("</");
+        c19129.m44177(EnumC19541.f63162);
+    }
+}

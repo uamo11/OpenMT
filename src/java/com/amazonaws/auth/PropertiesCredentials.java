@@ -1,0 +1,68 @@
+package com.amazonaws.auth;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/* loaded from: classes.dex */
+public class PropertiesCredentials implements AWSCredentials {
+
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public final String f156;
+
+    /* renamed from: ۧ, reason: not valid java name and contains not printable characters */
+    public final String f157;
+
+    public PropertiesCredentials(File file) {
+        if (!file.exists()) {
+            throw new FileNotFoundException("File doesn't exist:  " + file.getAbsolutePath());
+        }
+        FileInputStream fileInputStream = new FileInputStream(file);
+        try {
+            Properties properties = new Properties();
+            properties.load(fileInputStream);
+            if (properties.getProperty("accessKey") == null || properties.getProperty("secretKey") == null) {
+                throw new IllegalArgumentException("The specified file (" + file.getAbsolutePath() + ") doesn't contain the expected properties 'accessKey' and 'secretKey'.");
+            }
+            this.f156 = properties.getProperty("accessKey");
+            this.f157 = properties.getProperty("secretKey");
+        } finally {
+            try {
+                fileInputStream.close();
+            } catch (IOException unused) {
+            }
+        }
+    }
+
+    public PropertiesCredentials(InputStream inputStream) {
+        Properties properties = new Properties();
+        try {
+            properties.load(inputStream);
+            if (properties.getProperty("accessKey") == null || properties.getProperty("secretKey") == null) {
+                throw new IllegalArgumentException("The specified properties data doesn't contain the expected properties 'accessKey' and 'secretKey'.");
+            }
+            this.f156 = properties.getProperty("accessKey");
+            this.f157 = properties.getProperty("secretKey");
+        } finally {
+            try {
+                inputStream.close();
+            } catch (Exception unused) {
+            }
+        }
+    }
+
+    @Override // com.amazonaws.auth.AWSCredentials
+    /* renamed from: ֫ */
+    public final String mo206() {
+        return this.f156;
+    }
+
+    @Override // com.amazonaws.auth.AWSCredentials
+    /* renamed from: ܽ */
+    public final String mo207() {
+        return this.f157;
+    }
+}

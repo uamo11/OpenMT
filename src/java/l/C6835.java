@@ -1,0 +1,25 @@
+package l;
+
+/* compiled from: R69D */
+/* renamed from: l.ۜܶ֡, reason: contains not printable characters */
+/* loaded from: classes3.dex */
+public final class C6835 extends AbstractC20947 {
+
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public final int f21165;
+
+    public C6835(int i) {
+        super(0);
+        this.f21165 = i;
+    }
+
+    @Override // l.AbstractC20947
+    /* renamed from: ֫, reason: not valid java name and contains not printable characters */
+    public final void mo18519(C3438 c3438) {
+        int i = this.f21165;
+        if (i >= 0) {
+            c3438.write(43);
+        }
+        c3438.m10510(i);
+    }
+}
